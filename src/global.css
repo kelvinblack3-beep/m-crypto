@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@import 'heroui-native/styles';
+
+/* Let Tailwind's scanner see HeroUI Native's compiled classNames. */
+@source '../node_modules/heroui-native/lib';
+
+/* ════════════════════════════════════════════════════════════════════════════
+ * APP DESIGN TOKENS — the locked visual identity for THIS app.
+ *
+ * Owned by the design system: the infer/plan step writes this block and the
+ * refine path ("warmer", "more playful") edits it. Components consume these
+ * through token utilities (bg-accent, text-foreground, rounded-2xl, …) — they
+ * must NEVER hard-code hex or magic numbers. To restyle the whole app, edit the
+ * tokens here and let components re-snap; do not hand-patch individual screens.
+ *
+ * These override HeroUI Native's defaults (loaded just above), so only declare
+ * what differs. See design/dials.json for variance / motion / density and
+ * design/DESIGN.md for the identity this encodes.
+ * ════════════════════════════════════════════════════════════════════════════ */
+
+/* @newly:tokens:start — the lock_design step and the refine path rewrite EVERYTHING
+ * between these markers. Hand-edits here are allowed but will be replaced on refine. */
+
+/* Brand accent (primary action color), per color scheme. OKLCH like HeroUI.
+ * The scaffold default is Newly pink (the app icon's magenta) so the Welcome
+ * screen is on-brand out of the box; lock_design replaces it with the app's own. */
+@layer theme {
+  :root {
+    @variant light {
+      --accent: oklch(0.66 0.26 325);
+      --accent-foreground: oklch(0.99 0 0);
+    }
+    @variant dark {
+      --accent: oklch(0.72 0.22 325);
+      --accent-foreground: oklch(0.16 0 0);
+    }
+  }
+}
+
+/* Base corner radius — the DENSITY dial's lever. Every rounded-* utility derives
+ * from this (HeroUI: --radius-2xl = --radius * 2, etc.). Larger = softer/cozier. */
+@theme {
+  --radius: 0.75rem;
+}
+/* @newly:tokens:end */
+
+/* Web-only display fonts (native uses the system font stack: SF Pro / Roboto). */
+:root {
+  --font-display:
+    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+}
