@@ -1,0 +1,71 @@
+# Newly tooling replaces the placeholders in this file before deploy.
+# All outbound fetch() calls are filtered by Newly's managed egress layer.
+name = "newly-api-service"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[r2_buckets]]
+binding = "R2_BLOBS"
+bucket_name = "REPLACE_BLOBS"
+
+[[r2_buckets]]
+binding = "R2_STORAGE"
+bucket_name = "REPLACE_STORAGE"
+
+[[r2_buckets]]
+binding = "R2_PUBLIC"
+bucket_name = "REPLACE_PUBLIC"
+
+[[queues.producers]]
+binding = "QUEUE_DEFAULT"
+queue = "REPLACE_QUEUE"
+
+# KNOWN GAP: wrangler 3.114 does NOT propagate `[[queues.consumers]]` into
+# the WfP multipart script-upload metadata when --dispatch-namespace is set
+# (verified against the live /settings endpoint — only the producer
+# binding lands; queue_consumers is absent from the script's metadata).
+# The Workers Queues `/accounts/.../queues/{id}/consumers` endpoint also
+# rejects WfP scripts with `10007 Worker not found`. Two known unlocks:
+#   (a) upgrade wrangler to 4.x in the template; recent releases added
+#       WfP queue-consumer metadata emission.
+#   (b) post-deploy multipart re-PUT to the script-upload endpoint with
+#       queue_consumers added to metadata (Cloudflare's script-upload
+#       schema accepts it; wrangler just doesn't emit it).
+# Until one of those lands, this block is dead — producers can enqueue,
+# but the Worker's queue() handler never fires for tenant messages.
+[[queues.consumers]]
+queue = "REPLACE_QUEUE"
+max_batch_size = 10
+max_batch_timeout = 5
+max_retries = 5
+
+# Cron triggers are not supported on Newly Backend: a deploy with any cron is refused.
+[triggers]
+crons = []
+
+[vars]
+NEWLY_ENV = "dev"
+NEWLY_PROJECT_ID = "REPLACE_NEWLY_PROJECT_ID"
+LOG_LEVEL = "info"
+# Per-env Uptrace OTLP/HTTP endpoint; deploy.sh substitutes REPLACE_UPTRACE_OTLP_URL
+# from $UPTRACE_OTLP_URL in the sandbox env (set on modal-backend's all-secrets).
+# UPTRACE_DSN is a Worker Secret, PUT'd after wrangler deploy — see the secrets
+# allowlist in deploy.sh.
+UPTRACE_OTLP_URL = "REPLACE_UPTRACE_OTLP_URL"
+
+[observability]
+enabled = true
+# head_sampling_rate is intentionally omitted so it defaults to 1.0 (100%).
+# Per-tenant overrides land at deploy time via a PATCH /scripts/{name}/settings
+# from deploy.sh once the dial-it-down dashboard exists (spec: 2026-06-28-cf-
+# native-observability.md, Phase 3). Keep this in sync with auth-service.
+
+# Workers runtime auto-emits OTel-compliant spans for every fetch (in + out),
+# Neon HTTP, R2 / KV / queue.send, queue handler, scheduled handler — no code
+# changes required. Spans land in the same Workers Observability store as
+# logs and are queried via the same telemetry/query endpoint with
+# view='traces'. See spec for the per-binding attribute catalogue Cloudflare
+# documents.
+[observability.traces]
+enabled = true

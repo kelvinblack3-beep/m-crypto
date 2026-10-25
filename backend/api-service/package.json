@@ -1,0 +1,33 @@
+{
+  "name": "newly-api-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "hono": "4.12.27",
+    "drizzle-orm": "0.36.4",
+    "@neondatabase/serverless": "0.10.4",
+    "@microlabs/otel-cf-workers": "1.0.0-rc.52",
+    "jose": "5.10.0",
+    "zod": "3.25.76",
+    "@hono/zod-validator": "0.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20260624.1",
+    "@cloudflare/vitest-pool-workers": "0.5.41",
+    "drizzle-kit": "0.28.1",
+    "typescript": "5.9.3",
+    "vitest": "2.1.9",
+    "wrangler": "3.114.17"
+  }
+}

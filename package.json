@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@better-auth/expo": "1.6.20",
     "@expo/ui": "~57.0.10",
     "@expo/vector-icons": "^15.0.2",
     "@gorhom/bottom-sheet": "5.2.14",
@@ -15,6 +16,7 @@
     "@react-native-picker/picker": "2.11.4",
     "@shopify/flash-list": "2.0.2",
     "@shopify/react-native-skia": "2.6.2",
+    "better-auth": "1.6.20",
     "clsx": "^2.1.1",
     "expo": "~57.0.12",
     "expo-audio": "~57.0.4",

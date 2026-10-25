@@ -1,0 +1,21 @@
+# Newly tooling replaces the placeholders in this file before deploy.
+# All outbound fetch() calls are filtered by Newly's managed egress layer.
+name = "newly-auth-service"
+main = "src/server.ts"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+NEWLY_ENV = "dev"
+NEWLY_PROJECT_ID = "REPLACE_NEWLY_PROJECT_ID"
+LOG_LEVEL = "info"
+# Per-env Uptrace OTLP/HTTP endpoint — see api-service/wrangler.toml for the
+# rationale and the matching UPTRACE_DSN secret PUT'd by deploy.sh.
+UPTRACE_OTLP_URL = "REPLACE_UPTRACE_OTLP_URL"
+
+[observability]
+enabled = true
+# See api-service/wrangler.toml for the rationale on head_sampling_rate and
+# traces — kept in sync across both per-tenant services.
+[observability.traces]
+enabled = true

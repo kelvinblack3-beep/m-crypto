@@ -1,0 +1,20 @@
+{
+  "services": [
+    {
+      "name": "auth",
+      "path": "auth-service",
+      "type": "worker",
+      "schema": "auth",
+      "secrets": "auth",
+      "public": true
+    },
+    {
+      "name": "api",
+      "path": "api-service",
+      "type": "worker",
+      "schema": "api",
+      "secrets": "api",
+      "public": true
+    }
+  ]
+}

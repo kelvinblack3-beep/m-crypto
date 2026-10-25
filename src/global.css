@@ -28,12 +28,26 @@
 @layer theme {
   :root {
     @variant light {
-      --accent: oklch(0.66 0.26 325);
-      --accent-foreground: oklch(0.99 0 0);
+      --accent: #103F32;
+      --accent-foreground: #FFFFFF;
+      --background: #FFFFFF;
+      --foreground: #152B24;
+      --surface: #F2F5F2;
+      --surface-secondary: #E8EEEA;
+      --muted: #65766D;
+      --warning: #A47D36;
+      --border: #DCE4DE;
     }
     @variant dark {
-      --accent: oklch(0.72 0.22 325);
-      --accent-foreground: oklch(0.16 0 0);
+      --accent: #A8DEC3;
+      --accent-foreground: #103F32;
+      --background: #0C2019;
+      --foreground: #F2F5F2;
+      --surface: #16382B;
+      --surface-secondary: #214637;
+      --muted: #A2B7AA;
+      --warning: #D8B66C;
+      --border: #315141;
     }
   }
 }

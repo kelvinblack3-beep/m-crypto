@@ -1,53 +1,86 @@
-# Design spec (locked)
+# Mtaa — the neighbourhood, connected
 
-> This file is the app's locked visual identity. The infer/plan step writes it
-> before the build; the build reads it and may not contradict it; the refine path
-> updates it. Screens are built from the **tokens** (`src/global.css`) and the
-> **HeroUI Native** component library — never improvised per screen.
+## Grounding
+- Subject: Kenyan test-money wallet and community token laboratory.
+- Audience: adults learning transfers and community-token mechanics, never investing real money.
+- Core action: deposit test KSh, send a zero-fee transfer, inspect the immutable receipt.
+- Moment of use: quick, one-handed checks and deliberate confirmations on a phone.
 
-## Identity
+## Three directions
+1. **Forest ledger**: forest green, paper white, restrained brass; confident SF typography; wallet as a large typographic statement with a quiet transaction ledger.
+2. City exchange: black, electric lime, condensed data type; dense exchange terminal. Rejected: implies a real speculative exchange.
+3. Neighbourhood editorial: cream, coral, serif, photo-led community magazine. Rejected: weakens accounting clarity and conflicts with requested palette.
 
-- **Vibe:** _(e.g. calm, premium, playful, editorial)_ — clean & modern (default)
-- **Mode:** light + dark (system)
-- **Accent:** Newly pink (the scaffold default) — `--accent` in `src/global.css`
-- **Shape:** soft, `--radius: 0.75rem` (cozy)
-- **Type:** system font (SF Pro on iOS, Roboto on Android); no custom display font
+Chosen: Forest ledger. It puts clarity before hype, with the green transfer receipt as the recognisable brand object.
 
-## Dials
+## Palette and typography
+- Forest #103F32 → light accent, foreground for the wallet's inverse surface.
+- Paper #FFFFFF → light background and accent foreground.
+- Mist #F2F5F2 → light surface and soft grouping.
+- Brass #A47D36 → warning/test-network accents.
+- Ink #152B24 → light foreground.
+- Slate #65766D → muted text.
+Dark mode: deep forest background, lighter green accent, off-white text, muted sage labels. All color is token-driven.
+SF Pro/Roboto body. Large, tightly tracked semibold currency; tabular values, plain-language labels. No ornamental display face.
+Imagery: no stock money photos, no coin mascots. Identity comes from the wordmark, precisely drawn symbols and real transaction data. Token identity uses typographic ticker medallions until validated image uploads are implemented.
 
-See `design/dials.json`. These three dials set the overall feel:
+## Shell
+```
+[large title / small test-only label]  [account]
+[screen content scrolls]
+[                                  ]
+[ Wallet       Launchpad    Community ] native glass tabs
+```
+Pushed forms and details use a visible back control, same safe-area rhythm. Authentication precedes all private data.
 
-- **variance** — `low | medium | high`: how much screens may differ from one
-  another. `low` = strong consistency (every screen shares the same rhythm and
-  components); `high` = each screen can have a distinct hero treatment.
-- **motion** — `calm | standard | lively`: animation intensity. `calm` =
-  minimal, quick fades; `lively` = springy transitions, playful micro-interactions.
-- **density** — `compact | cozy | spacious`: spacing + radius rhythm. Drives the
-  base `--radius` and the default padding/gap scale used across screens.
+## First screen, two alternatives
+A (rejected): stat tiles → recent transactions → full-width add button. Too much like an administration template.
+B (kept):
+```
+Mtaa                             Account
+TEST MONEY · NOT WITHDRAWABLE
+[ Your neighbourhood wallet             ]
+[ KSh  <actual server balance>           ]
+[ Add test money ] [ Send · KSh 0 fee    ]
+Activity                         Refresh
++ simulated deposit / - transfer
+reference, amount, timestamp
+```
+A green wallet hero is the thesis. Zero fabricated history: a new account starts at zero.
 
-Defaults: variance `low`, motion `standard`, density `cozy`.
+## Other screens
+```
+Launchpad                 Create
+SIMULATION · NO BLOCKCHAIN SETTLEMENT
+[token ticker / name / latest simulated price]
+[token ticker / name / circulating supply]
+Portfolio → holdings and cost basis
+```
+```
+Token detail           Back
+[ticker / description / authorities]
+[simulated curve history or honest no-history state]
+[Buy | Sell] [quantity]
+[Get quote] → review exact amount → confirm
+[actual recorded trades]
+```
+```
+Community               Write
+[test-only community notice]
+[author / actual post / like / report / block]
+[load more]
+```
+```
+Account                 Back
+[username / contact verification state]
+[settings / portfolio / administration by role]
+[safety & privacy / sign out / delete account]
+```
+Forms: keyboard-aware, inline field labels, explicit review before financial simulation, error and pending feedback. Receipt: amount, zero fee, counterparty, reference, exact status, persistent test-only disclosure.
 
-## Screens
+## Signature moment: Receipt seal
+After a confirmed server transfer or simulated deposit, a green circular seal draws a checkmark in place and pairs with a success haptic. 0–250ms: stroke draws; then the receipt remains readable and still. Never fires on a browser success alone. Reduced motion shows the seal immediately. No artificial delay or confetti in a financial flow.
+Motion standard; crisp cubic timing tokens. No goal/streak mechanics in a wallet, so no milestone celebration.
 
-> The infer/plan step lists the screens to build here (one bullet each, with the
-> key sections per screen). The build implements exactly these.
->
-> The scaffold boots into `src/app/index.tsx`, the Newly welcome screen (tap the
-> icon, it rains icons). It is the brand placeholder the build REPLACES, never a
-> pattern to extend. The welcome screen's modules are the vendored npm package
-> `@newly/welcome` (`node_modules/@newly/welcome`); the build must NOT edit or
-> delete that package — it replaces the screen by rewriting `src/app/index.tsx`
-> and dropping the `@newly/welcome` import. `explore.tsx` stays as the reference
-> screen for Section / Card / ListRow / Segmented / confirmDelete. Replace this
-> list with the app's real screens.
-
-- Welcome (placeholder — replaced by the build)
-- Explore (reference screen; not in the tab bar until the app has tabs)
-
-## Anti-slop reminders
-
-- Tokens only — no raw hex, no magic spacing numbers in components.
-- HeroUI Native components + Uniwind `className`; StyleSheet only for native-only
-  surfaces (NativeTabs, `@expo/ui`, glass).
-- Native feel: system font, 44pt touch targets, SF Symbols (not emoji) for icons,
-  haptics on key actions, respect safe areas.
+## Plan check
+Removed the dashboard statistic grid and stock crypto imagery. Keep holdings distinct from KSh, devnet distinct from simulations. No random prices, fabricated confirmations or financial promises. This app is unmistakable through forest-green receipts, Kenyan denomination and the visible zero-fee transfer promise.
